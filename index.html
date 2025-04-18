@@ -3,40 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Miradaia</title>
+  <title>Miradaia Chat</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
+      padding: 0;
+    }
+    body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      color: white;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       height: 100vh;
-      text-align: center;
     }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
+
+    /* Barra superior */
+    header {
+      height: 50px;
+      background: #2a2f3b;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 1em;
     }
-    p {
-      font-size: 1.2em;
-      opacity: 0.9;
+
+    /* Contenedor general debajo del header */
+    .container {
+      display: flex;
+      flex: 1;
     }
-    a {
-      color: #a5d8ff;
-      text-decoration: none;
+
+    /* Sidebar izquierda */
+    .sidebar {
+      width: 220px;
+      background: #1e222a;
+      color: #ccc;
+      padding: 1em;
     }
-    a:hover {
-      text-decoration: underline;
+
+    /* Área de conversación */
+    .chat-area {
+      flex: 1;
+      background: #f1f2f4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Mensajes del chat */
+    .messages {
+      flex: 1;
+      padding: 1em;
+      overflow-y: auto;
+    }
+
+    /* Entrada de texto */
+    .input-area {
+      display: flex;
+      padding: 1em;
+      background: #fff;
+      border-top: 1px solid #ccc;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .input-area button {
+      margin-left: 0.5em;
+      padding: 0.8em 1.2em;
+      border: none;
+      background: #2a5298;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .input-area button:hover {
+      background: #1e3c72;
+    }
+
+    /* Mensaje individual */
+    .message {
+      margin-bottom: 1em;
+    }
+
+    .message.user {
+      text-align: right;
+      color: #2a5298;
+    }
+
+    .message.bot {
+      text-align: left;
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <h1>Miradaia</h1>
-  <p>Proyecto en desarrollo. Más información próximamente.</p>
-  <p><a href="https://github.com/MateffxHerk/Miradaia-Web" target="_blank">Ver en GitHub</a></p>
+  <header>
+    <h1>Miradaia Chat</h1>
+  </header>
+  <div class="container">
+    <aside class="sidebar">
+      <p>Nuevo chat</p>
+      <p>Historial</p>
+      <p>Ajustes</p>
+    </aside>
+    <main class="chat-area">
+      <div class="messages" id="chat">
+        <div class="message bot">Hola, ¿en qué puedo ayudarte?</div>
+      </div>
+      <div class="input-area">
+        <input type="text" id="userInput" placeholder="Escribe tu mensaje..." />
+        <button onclick="enviarMensaje()">Enviar</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function enviarMensaje() {
+      const input = document.getElementById('userInput');
+      const mensaje = input.value.trim();
+      if (mensaje === '') return;
+
+      const chat = document.getElementById('chat');
+
+      // Mensaje del usuario
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.innerText = mensaje;
+      chat.appendChild(userMsg);
+
+      // Mensaje de respuesta falsa
+      const botMsg = document.createElement('div');
+      botMsg.className = 'message bot';
+      botMsg.innerText = 'Respuesta automática de prueba.';
+      chat.appendChild(botMsg);
+
+      input.value = '';
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
 </body>
 </html>
